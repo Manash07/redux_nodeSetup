@@ -1,0 +1,3 @@
+[submodule "reduxSetup"]
+	path = reduxSetup
+	url = https://github.com/Manash07/reduxSetup.git
