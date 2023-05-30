@@ -1,17 +1,23 @@
-
 const http = require("http");
 
-const express = require('express')
-const app = express()
-const port = 8000
+const express = require("express");
+const app = express();
+const port = 8080;
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-app.get('/users', (req, res) => {
-  res.send('Hello users!')
-})
+app.use(cors());
+app.use(bodyParser.json());
+
+app.post("/users", (req, res) => {
+  // api method
+  console.log(req.body); // When body is not stringify in client side it shows undefined / express does not allow body by default
+  res.json(req.body);
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
 
 // How this page was created ??
 

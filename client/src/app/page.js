@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import styles from "./page.module.css";
@@ -8,27 +8,39 @@ import { useState } from "react";
 import { setLogin } from "./redux/reducerSlice/userSlice";
 
 export default function Home() {
-
   const dispatch = useDispatch();
 
-  const[form, setForm] = useState({})
+  const [form, setForm] = useState({});
 
-  const handleForm = (e) =>{
+  const handleForm = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-        setForm({
-          ...form,
-          [e.target.name]: e.target.value
-        })
-  }
-
-
-  const handleLogin = (e) => {
-
-    e.preventDefault()
+  const handleLogin = async (e) => {
+    e.preventDefault();
     // console.log(form)
-    dispatch(setLogin(form))
-  }
 
+    const response = await fetch("http://localhost:8080/users", {
+      method: "POST", // since get method is used in node js
+
+      body: JSON.stringify(form),
+
+      headers: {
+        // Headers send additional informations
+
+        "Content-type": "application/json",
+      },
+    });
+
+    //console.log(response);
+    const res = await response.json(); // Since we provided text if json was provided we could have used response.json()
+
+    //console.log(res);
+    //dispatch(setLogin(form));
+  };
 
   return (
     <>
@@ -44,10 +56,9 @@ export default function Home() {
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="Name"
-                onChange={handleForm} 
-                name="userName"            
-                
-                />
+                onChange={handleForm}
+                name="userName"
+              />
             </div>
             <div className="mb-3">
               <input
@@ -59,7 +70,7 @@ export default function Home() {
                 name="token"
               />
             </div>
-           
+
             <button type="submit" className="btn btn-success">
               Submit
             </button>
