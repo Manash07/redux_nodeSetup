@@ -39,7 +39,7 @@ export default function Home() {
     const res = await response.json(); // Since we provided text if json was provided we could have used response.json()
 
     //console.log(res);
-    //dispatch(setLogin(form));
+    dispatch(setLogin(form));
   };
 
   return (
